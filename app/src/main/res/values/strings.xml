@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SpinnerIndependentWork</string>
+    <string-array name="drinks">
+        <item>Choose your drink</item>
+        <item>Cappuccino</item>
+        <item>Latte</item>
+        <item>Flat white</item>
+    </string-array>
+</resources>
