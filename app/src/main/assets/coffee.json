@@ -1,0 +1,6 @@
+[
+  {"id": 0, "name":"Choose your drink","description":"", "price": 0},
+  {"id": 1, "name":"Cappuccino","description":"A cappuccino is an espresso-based coffee drink that originated in Austria with later development taking place in Italy, and is prepared with steamed milk foam (microfoam).", "price": 1.5},
+  {"id": 2, "name":"Latte","description":"Late is a coffee drink of Italian origin made with espresso and steamed milk. Variants include the chocolate-flavored mocha or replacing the coffee with another drink base such as masala chai (spiced Indian tea), mate, matcha, turmeric or rooibos; other types of milk, such as soy milk or almond milk, are also used. ", "price": 2},
+  {"id": 3, "name":"Flat white","description":"A flat white is a coffee drink consisting of espresso with microfoam (steamed milk with small, fine bubbles and a glossy or velvety consistency). It is comparable to a latte, but smaller in volume and with less microfoam, therefore having a higher proportion of coffee to milk, and milk that is more velvety in consistency – allowing the espresso to dominate the flavour, while being supported by the milk. ", "price": 2.5}
+]

@@ -3,6 +3,7 @@ package com.bubnov.spinnerindependentwork;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,40 +14,70 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private List<Coffee> coffee;
+
+    private Utils utils = new Utils();
     public double drinkPrice, sizePrice, totalPrice;
+    Spinner drinksSpinner;
     Button totalBtn;
     TextView txtPrice;
+    RadioButton m,l,s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Spinner drinksSpinner = findViewById(R.id.drinksSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.drinks, android.R.layout.simple_spinner_item);
+        coffee = utils.getCoffeeFormJsonFile((Context) this, "coffee.json");
+        drinksSpinner = findViewById(R.id.drinksSpinner);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, coffee);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         drinksSpinner.setAdapter(adapter);
         drinksSpinner.setOnItemSelectedListener(this);
         totalBtn = findViewById(R.id.totalBtn);
         txtPrice = findViewById(R.id.txtPrice);
+        m = findViewById(R.id.radio_medium);
+        l = findViewById(R.id.radio_large);
+        s = findViewById(R.id.radio_small);
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        String chosenDrink = adapterView.getItemAtPosition(0).toString();
-        if(position == 0){
-            totalBtn.setEnabled(false);
-        }else{
-            totalBtn.setEnabled(true);
-            if(position == 1){
-                drinkPrice = 1.5;
-            }else if(position == 2){
-                drinkPrice = 2;
-            }else if(position == 3){
-                drinkPrice = 2.5;
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+
+
+
+            for(Coffee drink : coffee) {
+                if(position != 0){
+                    totalBtn.setEnabled(true);
+                    if(drink.getId() == position){
+                        drinkPrice = drink.getPrice();
+                        txtPrice.setText(drink.getDescription());
+
+                        sizePrice = 0;
+                        if(m.isChecked()){
+                            sizePrice = 1.0;
+                        }else if(l.isChecked()){
+                            sizePrice = 1.5;
+                        }
+
+
+
+
+                        drinksSpinner.setSelection(0);
+                        s.isChecked();
+                        totalPrice = drinkPrice + sizePrice;
+                        txtPrice.setText("Total: "+totalPrice+"€");
+                    }
+                }else{
+                    totalBtn.setEnabled(false);
+                    txtPrice.setText("");
+                }
             }
-        }
+
 
     }
 
@@ -55,31 +86,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void onRadioButtonClicked(View view){
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch (view.getId()){
-            case R.id.radio_small:
-                if(checked){
-                    sizePrice = 0;
-                    break;
-                }
-            case R.id.radio_medium:
-                if(checked){
-                    sizePrice = 1.5;
-                    break;
-                }
-            case R.id.radio_large:
-                if(checked){
-                    sizePrice = 2.5;
-                    break;
-                }
-        }
-    }
 
     public void calculateTotal(View view){
-        totalPrice = drinkPrice + sizePrice;
-        txtPrice.setText("Total: "+totalPrice+"€");
 
     }
 }
