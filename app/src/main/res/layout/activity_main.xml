@@ -51,7 +51,7 @@
         android:layout_marginTop="68dp"
         android:text="Total"
         android:enabled="false"
-        android:onClick="calculateTotal"
+        android:onClick="onCalculateTotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />

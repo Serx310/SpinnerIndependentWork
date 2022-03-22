@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,8 +35,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_main);
         coffee = utils.getCoffeeFormJsonFile((Context) this, "coffee.json");
         drinksSpinner = findViewById(R.id.drinksSpinner);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, coffee);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner_custom, coffee);
+        //adapter.setDropDownViewResource();
         drinksSpinner.setAdapter(adapter);
         drinksSpinner.setOnItemSelectedListener(this);
         totalBtn = findViewById(R.id.totalBtn);
@@ -57,24 +58,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         drinkPrice = drink.getPrice();
                         txtPrice.setText(drink.getDescription());
 
-                        sizePrice = 0;
-                        if(m.isChecked()){
-                            sizePrice = 1.0;
-                        }else if(l.isChecked()){
-                            sizePrice = 1.5;
-                        }
 
-
-
-
-                        drinksSpinner.setSelection(0);
-                        s.isChecked();
-                        totalPrice = drinkPrice + sizePrice;
-                        txtPrice.setText("Total: "+totalPrice+"€");
                     }
                 }else{
                     totalBtn.setEnabled(false);
-                    txtPrice.setText("");
+
                 }
             }
 
@@ -87,7 +75,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    public void calculateTotal(View view){
-
+    public void onCalculateTotal(View view){
+        if(m.isChecked()){
+            sizePrice = 1.0;
+        }else if(l.isChecked()){
+            sizePrice = 1.5;
+        }else{
+            sizePrice = 0;
+        }
+        totalPrice = sizePrice+drinkPrice;
+        Log.i("TAG", String.valueOf(totalPrice));
+        txtPrice.setText("Pay " +String.valueOf(totalPrice));
+        drinksSpinner.setSelection(0);
+        s.isChecked();
     }
 }
